@@ -1,13 +1,15 @@
-import { ChangeRound } from '../actions';
-import { StoreState } from '../types/index';
-import { CHANGE_ROUND } from '../constants/index';
+import {ChangeRound} from '../actions';
+import { StoreState} from '../types';
+import { CHANGE_ROUND } from '../constants';
 
-export function round(state: StoreState, action: ChangeRound): StoreState {
+const round = (state: StoreState, action: ChangeRound) => {
     switch (action.type) {
         case CHANGE_ROUND:
-            return { ...state, round: action.value };
+            return { ...state, round: action.round };
         default:
             return state;
     }
+};
 
-}
+export default round;
+

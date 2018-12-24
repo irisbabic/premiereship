@@ -1,3 +1,3 @@
 export interface StoreState {
-    round: string,
+    round: number,
 }

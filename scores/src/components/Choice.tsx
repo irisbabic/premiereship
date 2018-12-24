@@ -1,33 +1,19 @@
 import * as React from 'react';
 import RankingTable from "./RankingTable";
-
 import * as data from "../data";
+import {StoreState} from "../types";
+//import './Choice.css'
 
 let clubs: Array<any> = [];
 
 export interface Props {
-    round: number;
-    onRoundChange?: (value: string) => any;
+    roundChoice?: (round: number) => number;
+    state: StoreState;
 }
 
-interface State {
-   round: number;
-}
+class Choice extends React.Component <Props> {
 
-class Choice extends React.Component <Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = { round: props.round };
-    }
-
-    roundChoice = (event?: any): void => {
-        event.persist();
-        this.setState({
-            round: event.target.innerHTML,
-        });
-    };
-
-    gamesWon = (klub: string, roundMatches: Object): number =>{
+    gamesWon = (klub: string, roundMatches: Object): number => {
         let wins = 0;
 
         (roundMatches as (Object)[]).map((match: Object, i: number) => {
@@ -48,7 +34,7 @@ class Choice extends React.Component <Props, State> {
         return wins;
     };
 
-    gamesLost = (klub: string, roundMatches: Object): number =>{
+    gamesLost = (klub: string, roundMatches: Object): number => {
         let lost = 0;
 
         (roundMatches as (Object)[]).map((match: Object, i: number) => {
@@ -127,64 +113,112 @@ class Choice extends React.Component <Props, State> {
     handleClubs = (roundMatches: Object): void => {
         clubs = [];
 
-        (roundMatches as (Object)[]).forEach((match: Object) => clubs.push(Object.keys(match)))
+        (roundMatches as (Object)[]).forEach((match: Object) => clubs.push(Object.keys(match)));
+    };
+    calculateTrend = (klub: string, roundMatches: Object) => {
+        if (this.gamesWon(klub, roundMatches) === 1) {
+            return "W"
+        } else if (this.gamesDrawn(klub, roundMatches) === 1) {
+            return "D"
+        } else {
+            return "L"
+        }
     };
 
     render() {
-        this.handleClubs(data[this.state.round-1].matches);
+        this.handleClubs(data[this.props.state.round - 1].matches);
         return (
-            <div>
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Pick a round
-                    </button>
-                    <div className="dropdown-menu pre-scrollable">
-                        {
-                            data.map(x =>
-                                <button className="dropdown-item" key={x.round}
-                                        onClick={this.roundChoice.bind(this)} value={x.round}>{x.round}</button>
-                                //this.props!.onRoundChange!(x.round.toString())
-                            )}
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                    <div className="dropdown float-left">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Pick a round
+                        </button>
+                        <div className="dropdown-menu pre-scrollable">
+                            {
+                                data.map(x =>
+                                    <button className="dropdown-item" key={x.round}
+                                            onClick={(e) => {
+                                                e.persist();
+                                                this.props.roundChoice!(parseInt((e.target as HTMLButtonElement).innerHTML))
+                                            }}>{x.round}</button>
+                                )}
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <h1 className="text-left">Round: {this.state.round}</h1>
-                <table className="table table-striped table-dark" id='myTable'>
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Played</th>
-                        <th scope="col">Won</th>
-                        <th scope="col">Drawn</th>
-                        <th scope="col">Lost</th>
-                        <th scope="col">GF</th>
-                        <th scope="col">GA</th>
-                        <th scope="col">GD</th>
-                        <th scope="col">Points</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {clubs.map((clubs? : any, index?: number) =>
-                        clubs.map((club: string, i: number) =>
-                            <RankingTable club={club}
-                                          won={this.gamesWon(club, data[this.state.round-1].matches)}
-                                          lost={this.gamesLost(club, data[this.state.round-1].matches)}
-                                          drawn={this.gamesDrawn(club, data[this.state.round-1].matches)}
-                                          ga={this.ga(club, data[this.state.round-1].matches)}
-                                          gf={this.gf(club, data[this.state.round-1].matches)}
-                                          key={club}
-                            />
-                        )
-                    )
-                    }
-                    </tbody>
-                </table>
+                <div className="row">
+                    <div className="col-md center-block">
+                    <h3 className="text-center">Round: {this.props.state.round}</h3>
+                </div>
+                    <div className="col-md center-block">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md">
+                        <table className="table table-striped table-bright" id='myTable'>
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Played</th>
+                                <th scope="col">Won</th>
+                                <th scope="col">Drawn</th>
+                                <th scope="col">Lost</th>
+                                <th scope="col">GF</th>
+                                <th scope="col">GA</th>
+                                <th scope="col">GD</th>
+                                <th scope="col">Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {clubs.map((clubs?: any, index?: number) =>
+                                clubs.map((club: string, i: number) =>
+                                    <RankingTable club={club}
+                                                  won={this.gamesWon(club, data[this.props.state.round - 1].matches)}
+                                                  lost={this.gamesLost(club, data[this.props.state.round - 1].matches)}
+                                                  drawn={this.gamesDrawn(club, data[this.props.state.round - 1].matches)}
+                                                  ga={this.ga(club, data[this.props.state.round - 1].matches)}
+                                                  gf={this.gf(club, data[this.props.state.round - 1].matches)}
+                                                  key={club}
+                                    />
+                                )
+                            )
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="col-md">
+                        <table className="table table-striped table-bright" id="trendTable">
+                            <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th colSpan={5} className="text-center">LAST 5 GAMES</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {clubs.sort().map((clubs?: any, index?: number) =>
+                                clubs.map((club: string, i: number) =>
+                                    <tr key={club}>
+                                        <td>{club}</td>
+                                        <td>{this.calculateTrend(club, data[data.length - 1].matches)}</td>
+                                        <td>{this.calculateTrend(club, data[data.length - 2].matches)}</td>
+                                        <td>{this.calculateTrend(club, data[data.length - 3].matches)}</td>
+                                        <td>{this.calculateTrend(club, data[data.length - 4].matches)}</td>
+                                        <td>{this.calculateTrend(club, data[data.length - 5].matches)}</td>
+                                    </tr>
+                                )
+                            )
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
 export default Choice;
-
-
