@@ -1,3 +1,14 @@
+##About
+This is a single page app made as part of an assignment got in a job interview.
+Required technologies to use were:
+- React
+- Redux
+- Typescript
+
+The assignment was to present a table with scores from Premier League, season 2016/17 by round
+starting from the last one.
+
+#
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
