@@ -1,7 +1,9 @@
-import * as React from 'react';
-import RankingTable from "./RankingTable";
 import * as data from "../data";
+import * as React from 'react';
+
 import {StoreState} from "../types";
+
+import RankingTable from "./RankingTable";
 
 let clubs: Array<any> = [];
 let trendClubs: Array<any>;
@@ -10,7 +12,6 @@ export interface Props {
     roundChoice?: (round: number) => number;
     state: StoreState;
 }
-
 
 /**
  * @class Choice
@@ -153,7 +154,7 @@ class Choice extends React.Component <Props> {
         clubs = [];
 
         (roundMatches as (Object)[]).forEach((match: Object) => {
-            Object.keys(match).map((club:string) => clubs.push(club))
+            Object.keys(match).map((club: string) => clubs.push(club))
         })
     };
 
@@ -183,28 +184,28 @@ class Choice extends React.Component <Props> {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                    <div className="dropdown float-left">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Pick a round
-                        </button>
-                        <div className="dropdown-menu pre-scrollable">
-                            {
-                                data.map(x =>
-                                    <button className="dropdown-item" key={x.round}
-                                            onClick={(e) => {
-                                                e.persist();
-                                                this.props.roundChoice!(parseInt((e.target as HTMLButtonElement).innerHTML))
-                                            }}>{x.round}</button>
-                                )}
+                        <div className="dropdown float-left">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pick a round
+                            </button>
+                            <div className="dropdown-menu pre-scrollable">
+                                {
+                                    data.map(x =>
+                                        <button className="dropdown-item" key={x.round}
+                                                onClick={(e) => {
+                                                    e.persist();
+                                                    this.props.roundChoice!(parseInt((e.target as HTMLButtonElement).innerHTML))
+                                                }}>{x.round}</button>
+                                    )}
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg">
-                    <h3 className="text-center">Round: {this.props.state.round}</h3>
-                </div>
+                        <h3 className="text-center">Round: {this.props.state.round}</h3>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-md">
@@ -225,14 +226,14 @@ class Choice extends React.Component <Props> {
                             </thead>
                             <tbody>
                             {clubs.map((club: string) =>
-                                    <RankingTable club={club}
-                                                  won={this.gamesWon(club, data[this.props.state.round - 1].matches)}
-                                                  lost={this.gamesLost(club, data[this.props.state.round - 1].matches)}
-                                                  drawn={this.gamesDrawn(club, data[this.props.state.round - 1].matches)}
-                                                  ga={this.ga(club, data[this.props.state.round - 1].matches)}
-                                                  gf={this.gf(club, data[this.props.state.round - 1].matches)}
-                                                  key={club}
-                                    />
+                                <RankingTable club={club}
+                                              won={this.gamesWon(club, data[this.props.state.round - 1].matches)}
+                                              lost={this.gamesLost(club, data[this.props.state.round - 1].matches)}
+                                              drawn={this.gamesDrawn(club, data[this.props.state.round - 1].matches)}
+                                              ga={this.ga(club, data[this.props.state.round - 1].matches)}
+                                              gf={this.gf(club, data[this.props.state.round - 1].matches)}
+                                              key={club}
+                                />
                             )
                             }
                             </tbody>
@@ -248,14 +249,14 @@ class Choice extends React.Component <Props> {
                             </thead>
                             <tbody>
                             {trendClubs.map((club?: any) =>
-                                    <tr key={club}>
-                                        <td>{club}</td>
-                                        <td>{this.calculateTrend(club, data[data.length - 1].matches)}</td>
-                                        <td>{this.calculateTrend(club, data[data.length - 2].matches)}</td>
-                                        <td>{this.calculateTrend(club, data[data.length - 3].matches)}</td>
-                                        <td>{this.calculateTrend(club, data[data.length - 4].matches)}</td>
-                                        <td>{this.calculateTrend(club, data[data.length - 5].matches)}</td>
-                                    </tr>
+                                <tr key={club}>
+                                    <td>{club}</td>
+                                    <td>{this.calculateTrend(club, data[data.length - 1].matches)}</td>
+                                    <td>{this.calculateTrend(club, data[data.length - 2].matches)}</td>
+                                    <td>{this.calculateTrend(club, data[data.length - 3].matches)}</td>
+                                    <td>{this.calculateTrend(club, data[data.length - 4].matches)}</td>
+                                    <td>{this.calculateTrend(club, data[data.length - 5].matches)}</td>
+                                </tr>
                             )
                             }
                             </tbody>
@@ -273,11 +274,11 @@ export default Choice;
  * @description Sorts an array of team names
  * @param roundMatches - all matches in the chosen round
  */
-    function sortTrend(roundMatches: Object){
-        trendClubs = [];
+function sortTrend(roundMatches: Object) {
+    trendClubs = [];
 
-        (roundMatches as (Object)[]).forEach((match?: any) => {
-            (Object.keys(match)).map( (club: string) => trendClubs.push(club))
-        });
-        trendClubs = trendClubs.sort();
-    }
+    (roundMatches as (Object)[]).forEach((match?: any) => {
+        (Object.keys(match)).map((club: string) => trendClubs.push(club))
+    });
+    trendClubs = trendClubs.sort();
+}
