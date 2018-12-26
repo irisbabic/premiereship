@@ -12,7 +12,14 @@ export interface Props {
 class RankingTable extends React.Component <Props> {
 
     /**
-     * @description When component mounts, helper function sortData is called
+     * @description When component updates, helper function sortData() is called
+     */
+      componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+        sortData();
+    }
+
+    /**
+     * @description When component mounts, helper function sortData() is called
      */
     componentDidMount(): void {
         sortData();
@@ -68,41 +75,35 @@ function sortData(): void {
     let table = document.getElementById('myTable')!.getElementsByTagName('tbody').item(0);
     let rowData = table!.rows;
 
-    //Sorting by total point count
+
     //Looping through row nodes to access table data
     for (let i = 0; i < rowData.length - 1; i++) {
         for (let j = 0; j < rowData.length - (i + 1); j++) {
-
+          //Sorting by total point count
             //Swapping row nodes if condition is satisfied
-            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) < parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) <
+                parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
                 table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
 
                 //Return ranking number to to previous state
                 rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
                 rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
             }
-        }
-    }
-
-    //If there are teams with same total point count, sort by total point count and goal difference
-    for (let i = 0; i < rowData.length - 1; i++) {
-        for (let j = 0; j < rowData.length - (i + 1); j++) {
-            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) < parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
+            //Sorting by total points and goal difference if there are two or more teams with same total points
+            else if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) ===
+                parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) <
+                    parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
                     table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
                     rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
                     rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
                 }
-            }
-        }
-    }
-
-    //If there are teams with same total point count and goal difference, sort by total point count, goal difference and scored goals
-    for (let i = 0; i < rowData.length - 1; i++) {
-        for (let j = 0; j < rowData.length - (i + 1); j++) {
-            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
-                    if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(5)!.innerHTML) < parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
+            } else {
+                //Sorting by total points, goal difference and goal scored if there are two or more teams with same total points and goal difference
+                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) ===
+                    parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
+                    if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(5)!.innerHTML) <
+                        parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
                         table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
                         rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
                         rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
