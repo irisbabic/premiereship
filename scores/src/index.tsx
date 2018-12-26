@@ -6,11 +6,12 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import round from './reducers/index';
 import { Provider } from "react-redux";
+import * as data from "./data";
 
 
 
 const store = createStore(round,{
-    round: 1,
+    round: data.length,
 });
 
 //store.dispatch(changeRound(5));
