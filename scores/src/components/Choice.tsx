@@ -152,7 +152,9 @@ class Choice extends React.Component <Props> {
     handleClubs = (roundMatches: Object): void => {
         clubs = [];
 
-        (roundMatches as (Object)[]).forEach((match: Object) => clubs.push(Object.keys(match)));
+        (roundMatches as (Object)[]).forEach((match: Object) => {
+            Object.keys(match).map((club:string) => clubs.push(club))
+        })
     };
 
     /**
@@ -172,14 +174,9 @@ class Choice extends React.Component <Props> {
     };
 
     /**
-     * @description Sorts an array of team names
-     * @param roundMatches - all matches in the chosen round
-     */
-
-    /**
      * @description Renders choice button and other components
      */
-    render() {
+    render(): React.ReactNode {
         this.handleClubs(data[this.props.state.round - 1].matches);
         sortTrend(data[0].matches);
         return (
@@ -227,8 +224,7 @@ class Choice extends React.Component <Props> {
                             </tr>
                             </thead>
                             <tbody>
-                            {clubs.map((clubs?: any, index?: number) =>
-                                clubs.map((club: string, i: number) =>
+                            {clubs.map((club: string) =>
                                     <RankingTable club={club}
                                                   won={this.gamesWon(club, data[this.props.state.round - 1].matches)}
                                                   lost={this.gamesLost(club, data[this.props.state.round - 1].matches)}
@@ -237,7 +233,6 @@ class Choice extends React.Component <Props> {
                                                   gf={this.gf(club, data[this.props.state.round - 1].matches)}
                                                   key={club}
                                     />
-                                )
                             )
                             }
                             </tbody>
@@ -274,6 +269,10 @@ class Choice extends React.Component <Props> {
 
 export default Choice;
 
+/**
+ * @description Sorts an array of team names
+ * @param roundMatches - all matches in the chosen round
+ */
     function sortTrend(roundMatches: Object){
         trendClubs = [];
 
