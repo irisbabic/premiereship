@@ -175,21 +175,13 @@ class Choice extends React.Component <Props> {
      * @description Sorts an array of team names
      * @param roundMatches - all matches in the chosen round
      */
-    sortTrend(roundMatches: Object){
-        trendClubs = [];
-
-        (roundMatches as (Object)[]).forEach((match?: any) => {
-            (Object.keys(match)).map( (club: string) => trendClubs.push(club))
-                });
-        trendClubs = trendClubs.sort();
-    }
 
     /**
      * @description Renders choice button and other components
      */
     render() {
         this.handleClubs(data[this.props.state.round - 1].matches);
-        this.sortTrend(data[0].matches);
+        sortTrend(data[0].matches);
         return (
             <div className="container">
                 <div className="row">
@@ -261,7 +253,6 @@ class Choice extends React.Component <Props> {
                             </thead>
                             <tbody>
                             {trendClubs.map((club?: any) =>
-                               // clubs.sort().map((club: string) =>
                                     <tr key={club}>
                                         <td>{club}</td>
                                         <td>{this.calculateTrend(club, data[data.length - 1].matches)}</td>
@@ -270,7 +261,6 @@ class Choice extends React.Component <Props> {
                                         <td>{this.calculateTrend(club, data[data.length - 4].matches)}</td>
                                         <td>{this.calculateTrend(club, data[data.length - 5].matches)}</td>
                                     </tr>
-                                //)
                             )
                             }
                             </tbody>
@@ -283,3 +273,12 @@ class Choice extends React.Component <Props> {
 }
 
 export default Choice;
+
+    function sortTrend(roundMatches: Object){
+        trendClubs = [];
+
+        (roundMatches as (Object)[]).forEach((match?: any) => {
+            (Object.keys(match)).map( (club: string) => trendClubs.push(club))
+        });
+        trendClubs = trendClubs.sort();
+    }
