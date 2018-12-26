@@ -1,10 +1,10 @@
-import Choice from '../components/Choice';
-
-import { StoreState } from '../types/index';
+import { changeRound } from "../actions/";
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { StoreState } from '../types/index';
 
-import {changeRound} from "../actions/";
+import Choice from '../components/Choice';
+
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ( {
     roundChoice: (round: number) => {dispatch(changeRound(round))}
