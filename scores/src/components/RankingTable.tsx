@@ -9,13 +9,13 @@ export interface Props {
     ga: number;
 }
 
-class RankingTable extends React.Component <Props>{
+class RankingTable extends React.Component <Props> {
 
     /**
      * @description When component mounts, helper function sortData is called
      */
-componentDidMount(): void {
-    sortData();
+    componentDidMount(): void {
+        sortData();
     }
 
     /**
@@ -50,7 +50,7 @@ componentDidMount(): void {
                 {this.props.gf - this.props.ga}
             </td>
             <td>
-                {(this.props.won*3) + this.props.drawn}
+                {(this.props.won * 3) + this.props.drawn}
             </td>
 
         </tr>);
@@ -85,11 +85,11 @@ function sortData(): void {
     }
 
     //If there are teams with same total point count, sort by total point count and goal difference
-    for(let i = 0; i < rowData.length - 1; i++) {
-        for(let j = 0; j < rowData.length - (i + 1); j++) {
-            if(parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j+1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                if(parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) < parseInt(rowData.item(j+1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
-                    table!.insertBefore(rowData.item(j+1)!,rowData.item(j));
+    for (let i = 0; i < rowData.length - 1; i++) {
+        for (let j = 0; j < rowData.length - (i + 1); j++) {
+            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) < parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
+                    table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
                     rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
                     rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
                 }
@@ -98,12 +98,12 @@ function sortData(): void {
     }
 
     //If there are teams with same total point count and goal difference, sort by total point count, goal difference and scored goals
-    for(let i = 0; i < rowData.length - 1; i++) {
-        for(let j = 0; j < rowData.length - (i + 1); j++) {
-            if(parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j+1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                if(parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) === parseInt(rowData.item(j+1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
-                    if(parseInt(rowData.item(j)!.getElementsByTagName('td').item(5)!.innerHTML) < parseInt(rowData.item(j+1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
-                        table!.insertBefore(rowData.item(j+1)!,rowData.item(j));
+    for (let i = 0; i < rowData.length - 1; i++) {
+        for (let j = 0; j < rowData.length - (i + 1); j++) {
+            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) === parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
+                    if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(5)!.innerHTML) < parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
+                        table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
                         rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
                         rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
                     }
