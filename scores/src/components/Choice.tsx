@@ -15,7 +15,7 @@ export interface Props {
 
 /**
  * @class Choice
- * @classdesc Component for renderinf choice button and table components
+ * @classdesc Component for rendering choice button and table components
  */
 class Choice extends React.Component <Props> {
 
@@ -204,7 +204,7 @@ class Choice extends React.Component <Props> {
                 </div>
                 <div className="row">
                     <div className="col-lg">
-                        <h3 className="text-center">Round: {this.props.state.round}</h3>
+                        <h3 className="text-center">Round: {this.props.state.round} / {data.length}</h3>
                     </div>
                 </div>
                 <div className="row">
