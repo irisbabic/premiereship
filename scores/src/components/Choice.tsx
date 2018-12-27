@@ -3,7 +3,10 @@ import * as React from 'react';
 
 import {StoreState} from "../types";
 
+//import Matches from "./Matches"
 import RankingTable from "./RankingTable";
+import Matches from "./Matches";
+
 
 let clubs: Array<any> = [];
 let trendClubs: Array<any>;
@@ -180,6 +183,7 @@ class Choice extends React.Component <Props> {
     render(): React.ReactNode {
         this.handleClubs(data[this.props.state.round - 1].matches);
         sortTrend(data[0].matches);
+
         return (
             <div className="container">
                 <div className="row">
@@ -208,8 +212,8 @@ class Choice extends React.Component <Props> {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md">
-                        <table className="table table-striped table-bright" id='myTable'>
+                    <div className="col-lg">
+                        <table className="table table-striped table-bright table-responsive" id='myTable'>
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -239,8 +243,11 @@ class Choice extends React.Component <Props> {
                             </tbody>
                         </table>
                     </div>
-                    <div className="col-md">
-                        <table className="table table-striped table-bright" id="trendTable">
+                    <div className="col-lg">
+                        <Matches data={data[this.props.state.round - 1].matches}/>
+                    </div>
+                    <div className="col-lg">
+                        <table className="table table-striped table-bright table-responsive" id="trendTable">
                             <thead>
                             <tr>
                                 <th>Team</th>
@@ -263,6 +270,7 @@ class Choice extends React.Component <Props> {
                         </table>
                     </div>
                 </div>
+
             </div>
         );
     }
