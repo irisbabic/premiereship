@@ -5,7 +5,7 @@ export interface ChangeRound {
     round: number;
 }
 
-export const changeRound = (round: number) =>{
+export const changeRound = (round: number) => {
     return {
         type: constants.CHANGE_ROUND,
         round: round,

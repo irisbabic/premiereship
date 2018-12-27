@@ -3,10 +3,8 @@ import * as React from 'react';
 
 import {StoreState} from "../types";
 
-//import Matches from "./Matches"
-import RankingTable from "./RankingTable";
 import Matches from "./Matches";
-
+import RankingTable from "./RankingTable";
 
 let clubs: Array<any> = [];
 let trendClubs: Array<any>;

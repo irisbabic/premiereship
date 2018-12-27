@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './Matches.css';
+import '../Matches.css';
 
 export interface Props {
     data: any;
@@ -8,8 +8,15 @@ export interface Props {
 
 let scores: any;
 
+/**
+ * @class Matches
+ * @classdesc Component for rendering games played
+ */
 class Matches extends React.Component <Props> {
 
+    /**
+     * @description Handles names of teams and scored goals in a game
+     */
     handleScores = () => {
         scores = [];
         (this.props.data as (Object)[]).map((matches: Object) => {

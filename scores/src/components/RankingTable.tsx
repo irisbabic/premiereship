@@ -9,12 +9,16 @@ export interface Props {
     ga: number;
 }
 
+/**
+ * @class RankingTable
+ * @classdesc Component for rendering ranking table
+ */
 class RankingTable extends React.Component <Props> {
 
     /**
      * @description When component updates, helper function sortData() is called
      */
-      componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<{}>, snapshot?: any): void {
         sortData();
     }
 
@@ -79,7 +83,7 @@ function sortData(): void {
     //Looping through row nodes to access table data
     for (let i = 0; i < rowData.length - 1; i++) {
         for (let j = 0; j < rowData.length - (i + 1); j++) {
-          //Sorting by total point count
+            //Sorting by total point count
             //Swapping row nodes if condition is satisfied
             if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) <
                 parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
