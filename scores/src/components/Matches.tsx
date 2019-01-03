@@ -3,10 +3,10 @@ import * as React from 'react';
 import '../Matches.css';
 
 export interface Props {
-    data: any;
+    data: Array<Object>;
 }
 
-let scores: any;
+let scores: Array<string>;
 
 /**
  * @class Matches
@@ -19,9 +19,9 @@ class Matches extends React.Component <Props> {
      */
     handleScores = () => {
         scores = [];
-        (this.props.data as (Object)[]).map((matches: Object) => {
-            Object.keys(matches).map((match: any) => (
-                scores.push(match + ':' + matches[match])
+        this.props.data.map((matches: Object) => {
+            Object.keys(matches).map((club: string) => (
+                scores.push(club + ':' + matches[club])
             ))
         });
     };

@@ -1,4 +1,4 @@
-import * as data from "../data";
+import * as data from '../data';
 import * as React from 'react';
 
 import {StoreState} from "../types";
@@ -6,8 +6,8 @@ import {StoreState} from "../types";
 import Matches from "./Matches";
 import RankingTable from "./RankingTable";
 
-let clubs: Array<any> = [];
-let trendClubs: Array<any>;
+let clubs: Array<string>;
+let trendClubs: Array<string>;
 
 export interface Props {
     roundChoice?: (round: number) => number;
@@ -35,15 +35,13 @@ class Choice extends React.Component <Props> {
                 if (match[club] > match[Object.keys(match)[1]]) {
                     wins++;
                 }
-            } else if ((club === Object.keys(match)[1])) {
+            } else {
                 if (match[club] > match[Object.keys(match)[0]]) {
                     wins++;
                 }
             }
-
             return 1;
         });
-
         return wins;
     };
 
@@ -111,15 +109,11 @@ class Choice extends React.Component <Props> {
 
         (roundMatches as (Object)[]).map((match: Object, i: number) => {
             if (club === Object.keys(match)[0]) {
-                if (match[club] < match[Object.keys(match)[1]]) {
                     ga += match[Object.keys(match)[1]];
-                }
-            } else if ((club === Object.keys(match)[1])) {
-                if (match[club] < match[Object.keys(match)[0]]) {
-                    ga += match[Object.keys(match)[0]];
-                }
-            }
 
+            } else if ((club === Object.keys(match)[1])) {
+                    ga += match[Object.keys(match)[0]];
+            }
             return 1;
         });
 
@@ -135,14 +129,13 @@ class Choice extends React.Component <Props> {
     gf = (club: string, roundMatches: Object): number => {
         let gf = 0;
 
-        (roundMatches as (Object)[]).map((match: Object, i: number) => {
-            Object.keys(match).map((x, i) => {
-                if (club === x) {
-                    gf = match[club];
+        (roundMatches as (Object)[]).map((matches: Object, i: number) => {
+            Object.keys(matches).map((match: string, i:number) => {
+                if (club === match) {
+                    gf = matches[club];
                 }
                 return 1;
             });
-            return 1;
         });
         return gf;
     };
@@ -166,9 +159,9 @@ class Choice extends React.Component <Props> {
      * @returns {string} W || D || L
      */
     calculateTrend = (club: string, roundMatches: Object) => {
-        if (this.gamesWon(club, roundMatches) === 1) {
+        if (this.gamesWon(club, roundMatches)) {
             return "W"
-        } else if (this.gamesDrawn(club, roundMatches) === 1) {
+        } else if (this.gamesDrawn(club, roundMatches)) {
             return "D"
         } else {
             return "L"
@@ -253,7 +246,7 @@ class Choice extends React.Component <Props> {
                             </tr>
                             </thead>
                             <tbody>
-                            {trendClubs.map((club?: any) =>
+                            {trendClubs.map((club: string) =>
                                 <tr key={club}>
                                     <td>{club}</td>
                                     <td>{this.calculateTrend(club, data[data.length - 1].matches)}</td>
@@ -283,7 +276,7 @@ export default Choice;
 function sortTrend(roundMatches: Object) {
     trendClubs = [];
 
-    (roundMatches as (Object)[]).forEach((match?: any) => {
+    (roundMatches as (Object)[]).forEach((match: any) => {
         (Object.keys(match)).map((club: string) => trendClubs.push(club))
     });
     trendClubs = trendClubs.sort();

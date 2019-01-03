@@ -79,41 +79,43 @@ function sortData(): void {
     let table = document.getElementById('myTable')!.getElementsByTagName('tbody').item(0);
     let rowData = table!.rows;
 
-
     //Looping through row nodes to access table data
     for (let i = 0; i < rowData.length - 1; i++) {
-        for (let j = 0; j < rowData.length - (i + 1); j++) {
-            //Sorting by total point count
-            //Swapping row nodes if condition is satisfied
-            if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) <
-                parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
+        //Sorting by total point count
+        //Swapping row nodes if condition is satisfied
+        if (parseInt(rowData.item(i)!.getElementsByTagName('td').item(8)!.innerHTML) <
+            parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+            table!.insertBefore(rowData.item(i + 1)!, rowData.item(i));
 
-                //Return ranking number to to previous state
-                rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
-                rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
-            }
-            //Sorting by total points and goal difference if there are two or more teams with same total points
-            else if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(8)!.innerHTML) ===
-                parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
-                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) <
-                    parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
-                    table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
-                    rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
-                    rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
-                }
-            } else {
-                //Sorting by total points, goal difference and goal scored if there are two or more teams with same total points and goal difference
-                if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(7)!.innerHTML) ===
-                    parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
-                    if (parseInt(rowData.item(j)!.getElementsByTagName('td').item(5)!.innerHTML) <
-                        parseInt(rowData.item(j + 1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
-                        table!.insertBefore(rowData.item(j + 1)!, rowData.item(j));
-                        rowData.item(j)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j)!.rowIndex).toString();
-                        rowData.item(j + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(j + 1)!.rowIndex).toString();
-                    }
-                }
+            //Return ranking number to to previous state
+            rowData.item(i)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i)!.rowIndex).toString();
+            rowData.item(i + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i + 1)!.rowIndex).toString();
+        }
+
+        //Sorting by total points and goal difference if there are two or more teams with same total points
+        if (parseInt(rowData.item(i)!.getElementsByTagName('td').item(8)!.innerHTML) ===
+            parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(8)!.innerHTML)) {
+            if (parseInt(rowData.item(i)!.getElementsByTagName('td').item(7)!.innerHTML) <
+                parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(7)!.innerHTML)) {
+                table!.insertBefore(rowData.item(i + 1)!, rowData.item(i));
+                rowData.item(i)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i)!.rowIndex).toString();
+                rowData.item(i + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i + 1)!.rowIndex).toString();
             }
         }
+
+        //Sorting by total points, goal difference and goal scored if there are two or more teams with same total points and goal difference
+        if (parseInt(rowData.item(i)!.getElementsByTagName('td').item(8)!.innerHTML) ===
+            parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(8)!.innerHTML) &&
+            (parseInt(rowData.item(i)!.getElementsByTagName('td').item(7)!.innerHTML) ===
+                parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(7)!.innerHTML))) {
+            if (parseInt(rowData.item(i)!.getElementsByTagName('td').item(5)!.innerHTML) <
+                parseInt(rowData.item(i + 1)!.getElementsByTagName('td').item(5)!.innerHTML)) {
+                table!.insertBefore(rowData.item(i + 1)!, rowData.item(i));
+                rowData.item(i)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i)!.rowIndex).toString();
+                rowData.item(i + 1)!.getElementsByTagName('th').item(0)!.innerHTML = (rowData.item(i + 1)!.rowIndex).toString();
+            }
+        }
+
     }
+
 }
