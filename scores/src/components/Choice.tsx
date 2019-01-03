@@ -91,10 +91,8 @@ class Choice extends React.Component <Props> {
                     drawn++;
                 }
             }
-
             return 1;
         });
-
         return drawn;
     };
 
