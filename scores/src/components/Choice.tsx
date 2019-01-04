@@ -86,8 +86,12 @@ class Choice extends React.Component <Props> {
                 if (match[club] === match[Object.keys(match)[1]]) {
                     drawn++;
                 }
-              } 
+              } else if (club === Object.keys(match)[1]){
+                   if (match[club] === match[Object.keys(match)[0]]) {
+                    drawn++;
+                }       
             }
+          }
             return 1;
         });
         return drawn;
